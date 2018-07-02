@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
-import EventListAttendee from './EventListAttendee';
+import EventListAttendee from "./EventListAttendee";
 
 class EventListItem extends Component {
   render() {
-
-    const {event} = this.props;
+    const { event, onEventOpen, deleteEvent } = this.props;
 
     return (
       <Segment.Group>
@@ -30,17 +29,30 @@ class EventListItem extends Component {
         </Segment>
         <Segment secondary>
           <List horizontal>
-          {event.attendees && event.attendees.map((attendees) => {
-            return (
-              <EventListAttendee key={attendees.id} attendees={attendees}/>
-            )
-          })}
-            
+            {event.attendees &&
+              event.attendees.map(attendees => {
+                return (
+                  <EventListAttendee key={attendees.id} attendees={attendees} />
+                );
+              })}
           </List>
         </Segment>
         <Segment clearing>
-            <span>{event.description}</span>
-          <Button as="a" color="teal" floated="right" content="View" />
+          <span>{event.description}</span>
+          <Button
+            onClick={deleteEvent(event.id)}
+            as="a"
+            color="red"
+            floated="right"
+            content="Delete"
+          />
+          <Button
+            onClick={onEventOpen(event)}
+            as="a"
+            color="teal"
+            floated="right"
+            content="View"
+          />
         </Segment>
       </Segment.Group>
     );
